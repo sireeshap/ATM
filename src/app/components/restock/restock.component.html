@@ -1,0 +1,5 @@
+<app-stock-table [tableHeaders]="headerList" [tableData]="baseAmount" [isEditable]="isEditable" (changedData)="getTableData($event)"></app-stock-table>
+
+<P class="text-danger"><b>NOTE:</b>Edit Count to restock </P>
+
+<p class="text-info" *ngIf="saved.length>0">{{saved}}</p>

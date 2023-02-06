@@ -1,0 +1,45 @@
+
+<h3 class="text-center">Available Stock</h3>
+<div class="card mb-3">
+<p-table #dt [columns]="tableHeaders" [value]="tableData" [scrollable]="true" [rows]="10" scrollHeight="200px" [virtualRowHeight]="30" [loading]="loading"
+    [virtualScroll]="true" (onLazyLoad)="loadAmountLazy($event)" [lazy]="true" [totalRecords]="totalRecords" responsiveLayout="scroll">
+    <ng-template pTemplate="header" let-columns>
+        <tr class="header text-center">
+            <th *ngFor="let col of tableHeaders">
+                {{col.label}} 
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+        <tr style="height:30px" class="text-center border">
+            <td *ngFor="let col of tableHeaders;" class="cell" pEditableColumn>
+                <p-cellEditor *ngIf="isEditable && col.key=='count'">
+                    <ng-template pTemplate="input">
+                        <input 
+                            pInputText 
+                            type="number" 
+                            min="0"
+                            max="100"
+                            [(ngModel)]="rowData['count'] "
+                            [ngClass]="rowData['count']>100 || rowData['count']<0? 'is-error':''"
+                            >
+                            
+                        <div><small class="text-danger" *ngIf="rowData['count']>100 || rowData['count']<0">Range should be 0-100</small></div>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                    {{rowData[col.key]}}
+
+                    </ng-template>
+
+                    <!-- <span *ngIf="col.key=='count'">{{rowData[col.key]}}</span> -->
+                </p-cellEditor>
+                <span *ngIf="col.key=='no'">{{i+1}}</span>
+                <span *ngIf="col.key=='total'">{{rowData['amount']*rowData['count']  | currency:'USD'}}</span>
+                <span  *ngIf="col.key!='count'">{{col.key=='amount'?(rowData[col.key]|currency:'USD'):(rowData[col.key])}}</span>
+                <span  *ngIf="!isEditable &&col.key=='count'">{{rowData[col.key]}}</span>
+            </td>
+        </tr>
+    </ng-template>
+    </p-table>
+</div>
+    <button *ngIf="isEditable" class="btn btn-primary float-right" (click)="saveChanges()"> Save changes</button>

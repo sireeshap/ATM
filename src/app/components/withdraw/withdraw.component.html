@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <form [formGroup]="withdrawForm" (ngSubmit)="onSubmit(withdrawForm)">
+            <div class="form-group">
+                <label for="amount">Enter Amount to be withdraw: </label>
+                <input id="amount" type="number" formControlName="withDrawAmount" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-secondary" type="submit">Withdraw</button>
+            </div>
+        </form>
+        <p [ngClass]="withdrawResponce!=undefined? 'text-success':'text-danger'">{{message}}</p>
+       
+        <!--Denomination table-->
+        <div class="container" *ngIf="withdrawResponce">
+            <h3 class="text-center">Denomination</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Notes</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of withdrawResponce | keyvalue; let i = index">
+                <td>{{item.key}}</td>
+                <td>{{ item.value}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+    </div>
+</div>

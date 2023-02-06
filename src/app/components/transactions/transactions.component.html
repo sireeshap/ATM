@@ -1,0 +1,26 @@
+<div class="container">
+    <h3 class="text-center">Transaction History</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Transaction Date</th>
+        <th scope="col">IP Address</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="transactionHistory.length > 0">
+      <tr *ngFor="let item of transactionHistory; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ item.Date | date }}</td>
+        <td>{{ item.IPAddress }}</td>
+        <td>{{ item.withdrawn }}</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="transactionHistory.length == 0">
+      <tr class="text-center">
+        <td colspan="4">No Trasaction Vailable</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
